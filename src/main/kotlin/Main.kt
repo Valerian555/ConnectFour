@@ -20,23 +20,25 @@ fun main() {
 
     //création de la liste du tableau
     var boardList = MutableList(board.rows) { MutableList(board.columns) { " " } }
-    var numberOfGame: Int = 1 // Valeur par défaut
 
-// Validation nombre de jeu
+    // choix et validation nombre de jeux
+    var numberOfGame = 1
+
     while (true) {
         println("Do you want to play single or multiple games?")
         println("For a single game, input 1 or press Enter")
         println("Input a number of games:")
 
-        val userInput = readLine()
+        val userInput = readln()
 
-        if (userInput.isNullOrEmpty()) {
-            // L'utilisateur a appuyé sur Enter, utilise la valeur par défaut
+        // L'utilisateur a appuyé sur Enter, utilise la valeur par défaut
+        if (userInput.isEmpty()) {
             break
         }
 
         try {
-            numberOfGame = userInput!!.toInt()
+            numberOfGame = userInput.toInt()
+
             if (numberOfGame == 0) {
                 println("Invalid input")
             } else {
@@ -47,34 +49,33 @@ fun main() {
         }
     }
 
-
-    if(numberOfGame > 1){
+    if (numberOfGame > 1) {
         multipleGame = true
     }
 
     //affichage début de jeu
     println("${player1.name} VS ${player2.name}")
     println("${board.rows} X ${board.columns} board")
-    if (multipleGame){
+    if (multipleGame) {
         println("Total $numberOfGame games")
     }
     var firstMoveGame = player1.name
 
-    for(i in 1..numberOfGame){
-        if (multipleGame){
+    for (i in 1..numberOfGame) {
+        if (multipleGame) {
             println("Game #$i")
             firstMoveGame = if (i % 2 == 1) player1.name else player2.name
         } else {
             println("Single game")
         }
         board.Display(board.columns, boardList)
-        game(player1.name,player2.name,firstMoveGame, boardList)
+        game(player1.name, player2.name, firstMoveGame, boardList)
         boardList = MutableList(board.rows) { MutableList(board.columns) { " " } }
     }
     println("Game over!")
 }
 
-fun game(player1Name: String, player2Name: String, currentPlayer: String, boardList: MutableList<MutableList<String>>){
+fun game(player1Name: String, player2Name: String, currentPlayer: String, boardList: MutableList<MutableList<String>>) {
     var columnChoiceInput: String
     var totalTokensPlaced = 0
     var currentPlayerOfGames = currentPlayer
@@ -96,7 +97,8 @@ fun game(player1Name: String, player2Name: String, currentPlayer: String, boardL
                 //placer jeton si emplacement vide sinon placé au-dessus dans la même colonne
                 while (rowsIndex0 >= 0 && !tokenPlaced) {
                     if (boardList[rowsIndex0][columnChoiceInputIndex0] == " ") {
-                        boardList[rowsIndex0][columnChoiceInputIndex0] = if (currentPlayerOfGames == player1Name) "o" else "*"
+                        boardList[rowsIndex0][columnChoiceInputIndex0] =
+                            if (currentPlayerOfGames == player1Name) "o" else "*"
                         tokenPlaced = true
                     }
                     rowsIndex0--
@@ -126,9 +128,9 @@ fun game(player1Name: String, player2Name: String, currentPlayer: String, boardL
 
         //Victory check
         //horizontal test
-        for(i in 0 until board.rows){
-            for (j in 0..board.columns -4)
-                if(boardList[i][j] == boardList[i][j+1] && boardList[i][j+1] == boardList[i][j+2] && boardList[i][j+2] == boardList[i][j+3] && (boardList[i][j] == "*"||boardList[i][j] == "o")){
+        for (i in 0 until board.rows) {
+            for (j in 0..board.columns - 4)
+                if (boardList[i][j] == boardList[i][j + 1] && boardList[i][j + 1] == boardList[i][j + 2] && boardList[i][j + 2] == boardList[i][j + 3] && (boardList[i][j] == "*" || boardList[i][j] == "o")) {
                     if (boardList[i][j] == "o") {
                         println("Player $player1Name won")
                         player1.score += 2
@@ -141,9 +143,9 @@ fun game(player1Name: String, player2Name: String, currentPlayer: String, boardL
         }
 
         //vertical test
-        for(j in 0 until board.columns){
-            for (i in 0..board.rows -4)
-                if(boardList[i][j] == boardList[i+1][j] && boardList[i+1][j] == boardList[i+2][j] && boardList[i+2][j] == boardList[i+3][j] && (boardList[i][j] == "*"||boardList[i][j] == "o")){
+        for (j in 0 until board.columns) {
+            for (i in 0..board.rows - 4)
+                if (boardList[i][j] == boardList[i + 1][j] && boardList[i + 1][j] == boardList[i + 2][j] && boardList[i + 2][j] == boardList[i + 3][j] && (boardList[i][j] == "*" || boardList[i][j] == "o")) {
                     if (boardList[i][j] == "o") {
                         println("Player $player1Name won")
                         player1.score += 2
@@ -156,9 +158,9 @@ fun game(player1Name: String, player2Name: String, currentPlayer: String, boardL
         }
 
         //test oblique descendant
-        for(j in 0 .. board.columns-4){
-            for (i in 0..board.rows -4)
-                if(boardList[i][j] == boardList[i+1][j+1] && boardList[i+1][j+1] == boardList[i+2][j+2] && boardList[i+2][j+2] == boardList[i+3][j+3] && (boardList[i][j] == "*"||boardList[i][j] == "o")){
+        for (j in 0..board.columns - 4) {
+            for (i in 0..board.rows - 4)
+                if (boardList[i][j] == boardList[i + 1][j + 1] && boardList[i + 1][j + 1] == boardList[i + 2][j + 2] && boardList[i + 2][j + 2] == boardList[i + 3][j + 3] && (boardList[i][j] == "*" || boardList[i][j] == "o")) {
                     if (boardList[i][j] == "o") {
                         println("Player $player1Name won")
                         player1.score += 2
@@ -171,9 +173,9 @@ fun game(player1Name: String, player2Name: String, currentPlayer: String, boardL
         }
 
         //test oblique montant
-        for(i in board.rows-1 downTo 3){
-            for (j in 0 .. board.columns-4)
-                if(boardList[i][j] == boardList[i-1][j+1] && boardList[i-1][j+1] == boardList[i-2][j+2] && boardList[i-2][j+2] == boardList[i-3][j+3] && (boardList[i][j] == "*"||boardList[i][j] == "o")){
+        for (i in board.rows - 1 downTo 3) {
+            for (j in 0..board.columns - 4)
+                if (boardList[i][j] == boardList[i - 1][j + 1] && boardList[i - 1][j + 1] == boardList[i - 2][j + 2] && boardList[i - 2][j + 2] == boardList[i - 3][j + 3] && (boardList[i][j] == "*" || boardList[i][j] == "o")) {
                     if (boardList[i][j] == "o") {
                         println("Player $player1Name won")
                         player1.score += 2
@@ -186,7 +188,7 @@ fun game(player1Name: String, player2Name: String, currentPlayer: String, boardL
         }
     }
 
-    if (multipleGame){
+    if (multipleGame) {
         println("Score")
         println("$player1Name: ${player1.score} $player2Name: ${player2.score}")
     }
