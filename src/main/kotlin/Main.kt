@@ -72,7 +72,7 @@ fun main() {
         } else {
             println("Single game")
         }
-        board.Display(board.columns, boardList)
+        board.display(board.columns, boardList)
         game.playAGame(player1.name, player2.name, firstMoveGame, boardList)
         boardList = MutableList(board.rows) { MutableList(board.columns) { " " } }
     }

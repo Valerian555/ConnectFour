@@ -36,7 +36,7 @@ class Game {
                         //changement de tour dans la partie
                         currentPlayerOfGame = if (currentPlayerOfGame == player1Name) player2Name else player1Name
 
-                        board.Display(board.columns, boardList)
+                        board.display(board.columns, boardList)
                         totalTokensPlaced++
 
                         //si le board est plein

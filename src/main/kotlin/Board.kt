@@ -33,7 +33,7 @@ class Board {
         }
     }
 
-    fun Display(columns: Int, board: MutableList<MutableList<String>>) {
+    fun display(columns: Int, board: MutableList<MutableList<String>>) {
         print(" ")
         //affichage numéro de colonne
         println((1..columns).joinToString(postfix = " ", separator = " "))
